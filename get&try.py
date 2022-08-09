@@ -9,9 +9,8 @@ L = instaloader.Instaloader()
 with open('login/login+password.txt', 'r') as f:
     lines = f.readlines()
     username = str(lines[0][:-1])
-    password = str(lines[1])
+    password = str(lines[1][:-1])
 # Login or load session 
-
 L.login(username, password)  # (login)
 print("logged in")
 # Obtain profile metadata
@@ -22,19 +21,30 @@ print("profile loaded")
 # Print list of followees
 follow_list = []
 count = 0
+followernum = profile.followers
+followeenum = profile.followees
+print("-")
 with open('follower.csv', 'w') as f:
     for follower in profile.get_followers():
         follow_list.append(follower.username)
         f.write(follow_list[count])
         f.write("\n")
         count +=1
+        print(f"creating follower.csv... {round(count*100/followernum,1)}%",end="")
+        print("\r",end="")
+count=0
+print("follower.csv created             ")
 with open('following.csv', 'w') as f:
     for follower in profile.get_followees():
         follow_list.append(follower.username)
         f.write(follow_list[count])
         f.write("\n")
         count +=1
+        print(f"creating following.csv... {round(count*100/followeenum,1)}%",end="")
+        print("\r",end="")
 # (likewise with profile.get_followers())
+print("following.csv created                    ")
+print("-")
 print("Done")
 
 if os.path.isfile("follower.csv") == False:
@@ -51,6 +61,7 @@ if missing == 1:
 
 same = []
 invert = []
+private = []
 
 follower = []
 with open('follower.csv', newline='') as csvfile:
@@ -77,8 +88,11 @@ for i in range(len(biggest)):
         if biggest[i][0] == smallest[j][0]:
             same.append(biggest[i][0])
             pass
+    print(f"checking follow back...{round((i+1)*100/len(biggest),1)}%",end="")
+    print("\r",end="")
     invert.append(biggest[i][0])
-
+print("follow back - Done                                           ")
+print("-")
 print(f"Follow Back: {len(same)} | Don't follow Back: {len(invert)} | Total: {len(same)+len(invert)}\n----")
 
 answer = input("save these results as  files ? y/n \n")
