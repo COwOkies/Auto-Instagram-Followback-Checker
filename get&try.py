@@ -60,7 +60,6 @@ if missing == 1:
     exit()
 
 same = []
-invert = []
 private = []
 
 follower = []
@@ -90,12 +89,11 @@ for i in range(len(biggest)):
             pass
     print(f"checking follow back...{round((i+1)*100/len(biggest),1)}%",end="")
     print("\r",end="")
-    invert.append(biggest[i][0])
 print("follow back - Done                                           ")
 print("-")
-print(f"Follow Back: {len(same)} | Don't follow Back: {len(invert)} | Total: {len(same)+len(invert)}\n----")
+print(f"Follow Back: {len(same)}\n----")
 
-answer = input("save these results as  files ? y/n \n")
+answer = input("save this result as  file ? y/n \n")
 print("Follow Back:")
 
 if answer == "y":
@@ -107,11 +105,6 @@ else:
     for i in range(len(same)):
         print(f"{same[i]} | https://www.instagram.com/{same[i]}/")
 
-            
-if answer == "y":
-    with open('X Follow Back.txt', 'w') as f:
-        for i in range(len(invert)):
-            f.write(f"{invert[i]} | https://www.instagram.com/{invert[i]}/ \n")
 if answer == "y":
     print("\nFollow Back saved as \"Follow Back.txt\".\nDon't follow Back saved as \"X Follow Back.txt\".")
 input("")
